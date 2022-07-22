@@ -1,0 +1,43 @@
+extends ../layout/header
+block header
+    p.cart GIỎ HÀNG
+    table.cart
+        tbody
+            tr
+                th SẢN PHẨM
+                th ĐƠN GIÁ
+                th.center SỐ LƯỢNG
+                th
+            each product in products
+                tr
+                    td.item 
+                        img(src= '../images/' + product.url)
+                        span= product.name
+                    td= product.price.toLocaleString("fi-FI") + '₫'
+                    td
+                        .qty
+                            a(href='/cart/delete/1/' + product.productId) ◀ 
+                            span= product.quantity
+                            a(href='/cart/add/1/' + product.productId) ▶
+                    td
+                        button.del 
+                            a.del(href='/cart/delete/' + product.productId) Xóa
+    table.check
+        tbody
+            tr.total
+                th THÀNH TIỀN:
+                th= totalPrice.toLocaleString("fi-FI") + '₫'
+                th
+                th.check 
+                    button.check
+                        a.check(href='/checkout') THANH TOÁN →
+
+
+
+
+
+
+
+
+
+

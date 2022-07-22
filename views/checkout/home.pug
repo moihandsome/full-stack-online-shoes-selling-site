@@ -1,0 +1,115 @@
+html 
+    head
+        link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css")
+        script(src='https://code.jquery.com/jquery-3.5.1.slim.min.js' integrity='sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj' crossorigin='anonymous')
+        script(src='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js' integrity='sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns' crossorigin='anonymous')
+        link(rel='stylesheet', href='/styles/checkout/home.css')
+        title X-Mobie
+    body
+        .container
+            .py-4.text-left
+                a(href='/cart') ← Quay lại
+            .py-3.text-center
+                h2 THÔNG TIN THANH TOÁN
+            .row
+                .col-md-4.order-md-2.mb-4
+                    h4.d-flex.justify-content-between.align-items-center.mb-3
+                        span.text-muted Giỏ hàng
+                        span.badge.badge-secondary.badge-pill #{countCart}
+                    ul.list-group.mb-3
+                        each product in products
+                            li.list-group-item.d-flex.justify-content-between.lh-condensed
+                                img.checkout(src= '../images/' + product.url)
+                                div.checkout
+                                    h6.my-0= product.name
+                                    small.text-muted Số lượng: 
+                                        span= product.quantity
+                                span.text-muted= product.price.toLocaleString("fi-FI") + '₫'
+                        li.list-group-item.d-flex.justify-content-between
+                            span Tổng giá trị sản phẩm
+                            strong= totalPrice.toLocaleString("fi-FI") + '₫'
+                        li.list-group-item.d-flex.justify-content-between
+                            span Thuế VAT (10%)
+                            strong= tax.toLocaleString("fi-FI") + '₫'
+                        li.list-group-item.d-flex.justify-content-between
+                            span Phí vận chuyển
+                            strong= shippingfee.toLocaleString("fi-FI") + '₫'
+                        li.list-group-item.d-flex.justify-content-between
+                            span Tổng tiền thanh toán
+                            strong= totalAll.toLocaleString("fi-FI") + '₫'
+                .col-md-8.order-md-1
+                    h4.mb-3 Địa chỉ nhận hàng
+                    p.mb-4 (*) Các thông tin bắt buộc
+                    if errors
+                        each error in errors
+                            .alert.alert-danger= error
+                    form(action="/checkout" method="post")
+                        .mb-3
+                            label(for='fullname') Họ và tên *
+                            input#fullname.form-control(name='fullname' type='text' placeholder='Nguyễn Văn A' required=''
+                            value=values ? values.fullname : '')
+
+                        .mb-3
+                            label(for='phone') Số điện thoại *
+                            input#phone.form-control(name='phone' type='text' placeholder='0123456789' required=''
+                            value=values ? values.phone : '')
+                        .mb-3
+                            label(for='address') Địa chỉ *
+                            input#address.form-control(name='address' type='text' placeholder='123 Hai Bà Trưng' required=''
+                            value=values ? values.address : '')
+                        .row
+                            .col-md-3.mb-3
+                                label(for='country') Quốc gia
+                                .custom-control.custom-radio
+                                    input#country.custom-control-input(name='country' value='Việt Nam' type='radio' checked='' required='')
+                                    label.custom-control-label(for='country') Việt Nam
+                            .col-md-4.mb-3
+                                label(for='state') Tỉnh / Thành phố *
+                                select#state.custom-select.d-block.w-100(name="state" required='')
+                                    option(selected='' disabled='' value='') Chọn...
+                                    option Hồ Chí Minh 
+                                    option Hà Nội
+                                    option Đà Nẵng
+                                    option Cần Thơ
+                                    option Hải Phòng
+                                    option Đồng Nai
+                                    option Bình Dương
+                            .col-md-3.mb-3
+                                label(for='zipcode') Mã bưu chính *
+                                input#zipcode.form-control(name='zipcode' type='text' placeholder='' required=''
+                                value=values ? values.zipcode : '')
+                        hr.mb-4
+                        h4.mb-3 Phương thức thanh toán
+                        .d-block.my-3
+                            .custom-control.custom-radio
+                                input#cod.custom-control-input(name='paymentMethod' value='COD' type='radio' checked='' required='')
+                                label.custom-control-label(for='cod') Thanh toán khi nhận hàng
+                            .custom-control.custom-radio
+                                input#credit.custom-control-input(name='paymentMethod' value='CREADIT' type='radio' required='')
+                                label.custom-control-label(for='credit') Thẻ tín dụng
+                            .custom-control.custom-radio
+                                input#atm.custom-control-input(name='paymentMethod' value='ATM' type='radio' required='')
+                                label.custom-control-label(for='atm') Thẻ ATM
+                            .custom-control.custom-radio
+                                input#paypal.custom-control-input(name='paymentMethod' value='PAYPAL' type='radio' required='')
+                                label.custom-control-label(for='paypal') PayPal
+                            .custom-control.custom-radio
+                                input#wallet.custom-control-input(name='paymentMethod' value='WALLET' type='radio' required='')
+                                label.custom-control-label(for='wallet') Ví điện tử
+                        hr.mb-4
+                        button.btn.btn-primary.btn-lg(type='button' data-toggle='modal' data-target='#checkoutConfirm') 
+                            | THANH TOÁN
+                        .modal(id='checkoutConfirm' role='dialog' class='fade')
+                            .modal-dialog
+                                .modal-content
+                                    .modal-header
+                                        h5.modal-title Xác nhận mua hàng
+                                        button.close(type='button' data-dismiss='modal') ×
+                                    .modal-body
+                                        | Đồng ý xác nhận thanh toán và mua hàng?
+                                    .modal-footer
+                                        button.btn.btn-secondary(type='button' data-dismiss='modal') Hủy
+                                        button.btn.btn-primary(type='submit') Đồng ý
+                
+            footer.my-5.pt-5.text-muted.text-center.text-small
+                p.mb-1 © 2021 X-Mobile

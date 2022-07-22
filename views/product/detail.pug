@@ -1,0 +1,79 @@
+extends ../layout/header
+block header
+    script(src='https://code.jquery.com/jquery-3.6.0.js')
+    each product in products
+        .row
+            .col-2
+                img(src= '../images/' + product.url)
+            .col-2
+                p
+                    a(href='/') Home
+                    |  / 
+                    a(href='/products/' + product.brand)= product.brand
+                h1= product.name
+                br
+                h4= product.price.toLocaleString("fi-FI") + '₫'
+                br
+                button
+                    a.add.button(href='/cart/add/' + product.productId) THÊM VÀO GIỎ HÀNG
+                    //- span.added 
+                    //-     i.fas.fa-check
+                    //- i.fas.fa-shopping-cart 
+                    //- i.fas.fa-box
+                script.
+                    const cartButtons = document.querySelectorAll('.cart-button');
+                    cartButtons.forEach(button => {
+                        button.addEventListener('click', cartClick)
+                    })
+                    function cartClick() {
+                        let button = this;
+                        button.classList.add('clicked')
+                    }
+                br
+                br
+                br
+                table
+                    tr
+                        th.title(colspan='2') THÔNG SỐ KỸ THUẬT
+                    tr
+                        th Kích thước màn hình
+                        td= product.screen_size
+                    tr
+                        th Công nghệ màn hình
+                        td= product.screen_tech
+                    tr
+                        th Camera sau
+                        td= product.camera_rear
+                    tr
+                        th Camera trước
+                        td= product.camera_front
+                    tr
+                        th Chipset
+                        td= product.chipset
+                    tr
+                        th RAM
+                        td= product.ram
+                    tr
+                        th Bộ nhớ trong
+                        td= product.memory
+                    tr
+                        th Pin
+                        td= product.pin
+                    tr
+                        th Hệ điều hành
+                        td= product.os
+    .recommendItems
+        .row1
+            p Các sản phẩm liên quan
+        .row
+            each product in recommendProducts
+                .col-3 
+                    .card
+                        a(href='/products/' + product.productId)
+                            .hover
+                                figure
+                                    img(src= '../images/' + product.url)
+                        .card-body
+                            h4= product.name
+                            h6= product.price.toLocaleString("fi-FI") + '₫'
+

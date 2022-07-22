@@ -1,0 +1,104 @@
+html 
+    head 
+        link(rel='stylesheet', href='/styles/layout/header.css')
+        link(rel='stylesheet', href='/styles/trackingorder/search.css')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css')
+        title X-Mobie
+    body
+        header
+            a(href='/')
+                img.logo(src='../images/logo.png', width='120px', height='60px')
+            ul.nav__links
+                li.hover
+                    a(href='/products') Tất cả
+                li
+                    a(href='/products/apple') Apple
+                li
+                    a(href='/products/samsung') Samsung
+                li
+                    a(href='/products/oppo') Oppo
+                li
+                    a(href='/products/realme') Realme
+                li
+                    a(href='/products/vsmart') Vsmart
+                li 
+                    .dropdown
+                        a.button.dropbtn(href='/products/accessories') Phụ kiện
+                        .dropdown-content
+                            a(href='/products/case') Ốp lưng
+                            a(href='/products/charger-cable') Cáp sạc | Củ sạc
+                            a(href='/products/battery') Pin dự phòng
+                li
+                    a(href='/news') Tin tức
+            form(action='/products/search', method='get')
+                input(type='text', name='q', placeholder='Nhập tên sản phẩm...')
+                button(type='submit')
+                    i.fas.fa-search
+            a(href="/cart")    
+                .cart-nav 
+                    .icon 
+                        i.fas.fa-shopping-cart
+                    .item-numb #{countCart}
+
+        h1.center THÔNG TIN ĐƠN HÀNG
+        table.cart
+            tbody
+                tr
+                    th 
+                        .center Mã đơn hàng
+                    th
+                        .center Thời gian đặt hàng
+                    th.cus 
+                        .center Thông tin khách hàng
+                    th
+                        .center Thông tin sản phẩm
+                    th 
+                        .center Tổng tiền thanh toán
+                    th
+                        .center Phương thức thanh toán
+                    th
+                        .center Trạng thái đơn hàng
+                each orderInfo in orderInfos
+                    tr
+                        td
+                            .center= orderInfo.orderId
+                        td
+                            .center= orderInfo.timeOrder
+                        td
+                            .center                 
+                                span= orderInfo.fullname
+                                br 
+                                span= orderInfo.phone
+                                br 
+                                span= orderInfo.address
+                                br
+                                span= orderInfo.state
+                                br 
+                                span= orderInfo.country
+                                br
+                                span= orderInfo.zipcode
+                        td
+                            table 
+                                tr
+                                    th
+                                        .center Tên sản phẩm
+                                    th
+                                        .center Giá sản phẩm 
+                                    th
+                                        .center Số lượng
+                                each orderDetail in orderDetails
+                                    if (orderDetail.orderId == orderInfo.orderId)   
+                                        tr
+                                            td
+                                                .center= orderDetail.name
+                                            td 
+                                                .center= orderDetail.price.toLocaleString("fi-FI") + '₫'
+                                            td 
+                                                .center= orderDetail.quantity
+
+                        td
+                            .center= orderInfo.totalPrice.toLocaleString("fi-FI") + '₫'
+                        td
+                            .center= orderInfo.paymentMethod
+                        td 
+                            .center= orderInfo.status

@@ -1,0 +1,60 @@
+html 
+    head 
+        link(rel='stylesheet', href='/styles/layout/header.css')
+        link(rel='stylesheet', href='/styles/news/home.css')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css')
+        title X-Mobie
+    body
+        header
+            a(href='/')
+                img.logo(src='../images/logo.png', width='120px', height='60px')
+            ul.nav__links
+                li.hover
+                    a(href='/products') Tất cả
+                li
+                    a(href='/products/apple') Apple
+                li
+                    a(href='/products/samsung') Samsung
+                li
+                    a(href='/products/oppo') Oppo
+                li
+                    a(href='/products/realme') Realme
+                li
+                    a(href='/products/vsmart') Vsmart
+                li 
+                    .dropdown
+                        a.button.dropbtn(href='/products/accessories') Phụ kiện
+                        .dropdown-content
+                            a(href='/products/case') Ốp lưng
+                            a(href='/products/charger-cable') Cáp sạc | Củ sạc
+                            a(href='/products/battery') Pin dự phòng
+                li
+                    a(href='/news') Tin tức
+            form(action='/products/search', method='get')
+                input(type='text', name='q', placeholder='Nhập tên sản phẩm...')
+                button(type='submit')
+                    i.fas.fa-search
+            a(href="/cart")    
+                .cart-nav 
+                    .icon 
+                        i.fas.fa-shopping-cart
+                    .item-numb #{countCart}
+        .news
+            .row
+                img(src="../images/banner.jpg", alt="")
+            .row
+                h1 TIN TỨC MỚI NHẤT
+            each newss in news
+                .row
+                    a.col(href='/news/' + newss.newsId)
+                        img.title(src="../images/news/" + newss.url, alt="")
+                    .col
+                        .title
+                            a(href='/news/' + newss.newsId) 
+                                h2= newss.title
+                            .time
+                                i.fas.fa-clock
+                                    span= newss.time
+                            br
+                            p= newss.detail
+            

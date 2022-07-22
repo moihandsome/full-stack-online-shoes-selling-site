@@ -1,0 +1,171 @@
+html 
+    head 
+        link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css")
+        link(rel='stylesheet', href='/styles/admin/order.css')
+        script(src='https://code.jquery.com/jquery-3.5.1.slim.min.js' integrity='sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj' crossorigin='anonymous')
+        script(src='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js' integrity='sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns' crossorigin='anonymous')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css')
+        title X-Mobie / Admin
+    body
+        .countdown
+            .countt
+                h6 Phiên làm việc sẽ kết thúc trong:  
+                h6#demo.count
+                script.
+                    var countDownDate = new Date(#{z}+30*60*1000).getTime();
+                    var x = setInterval(function() {
+                        var now = new Date().getTime();
+                        var distance = countDownDate - now;
+                        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                        document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+                        + minutes + "m " + seconds + "s ";
+                        if (distance < 0) {
+                            clearInterval(x);
+                            document.getElementById("demo").innerHTML = "Vui lòng đăng nhập lại để tiếp tục!";
+                        }
+                    }, 1000);
+            .infouser
+                i.fas.fa-user
+                span= fullname
+                br
+                i.fas.fa-tag 
+                span= role
+                br
+                a.logout.btn.btn-sm.btn-danger(href='/admin/logout') Đăng xuất
+        .title
+            .center 
+                a(href='/admin') 
+                    h4 X-MOBILE
+            .center
+                h1 QUẢN LÝ ĐƠN HÀNG
+        .form.center
+            form(action='/admin/orders/search', method='get')
+                input(type='text', name='q', placeholder='Nhập mã đơn hàng...')
+                button(type='submit')
+                    i.fas.fa-search
+            a.btn.btn-sm.btn-primary.ml-2(href='/admin/phones') Quản lý điện thoại
+            a.btn.btn-sm.btn-primary.ml-2(href='/admin/accessories') Quản lý phụ kiện
+            a.btn.btn-sm.btn-primary.ml-2(href='/admin/news') Quản lý tin tức
+            a.btn.btn-sm.btn-primary.ml-2(href="/admin/orders") Quản lý đơn hàng
+            a.btn.btn-sm.btn-primary.ml-2(href="/admin/users") Quản lý nhân sự
+        table.cart
+            tbody
+                tr
+                    th 
+                        .center Mã đơn hàng
+                    th
+                        .sort
+                            .center Thời gian đặt hàng
+                            .arow
+                                a.btn.btn-sm(href="/admin/orders/sort-by-date-desc") ▲
+                                a.btn.btn-sm(href="/admin/orders/sort-by-date-asc") ▼
+                    th.cus 
+                        .center Thông tin khách hàng
+                    th
+                        .center Thông tin sản phẩm
+                    th 
+                        .center Tổng tiền thanh toán
+                    th
+                        .center Phương thức thanh toán
+                    th
+                        .center Trạng thái đơn hàng
+                    th 
+                        .center Hành động
+                each orderInfo in orderInfos
+                    tr
+                        td
+                            .center= orderInfo.orderId
+                        td
+                            .center= orderInfo.timeOrder
+                        td
+                            .center                 
+                                span= orderInfo.fullname
+                                br 
+                                span= orderInfo.phone
+                                br 
+                                span= orderInfo.address
+                                br
+                                span= orderInfo.state
+                                br 
+                                span= orderInfo.country
+                                br
+                                span= orderInfo.zipcode
+                        td
+                            table 
+                                tr
+                                    th
+                                        .center Tên sản phẩm
+                                    th
+                                        .center Giá sản phẩm 
+                                    th
+                                        .center Số lượng
+                                each orderDetail in orderDetails
+                                    if (orderDetail.orderId == orderInfo.orderId)   
+                                        tr
+                                            td
+                                                .center= orderDetail.name
+                                            td 
+                                                .center= orderDetail.price.toLocaleString("fi-FI") + '₫'
+                                            td 
+                                                .center= orderDetail.quantity
+
+                        td
+                            .center= orderInfo.totalPrice.toLocaleString("fi-FI") + '₫'
+                        td
+                            .center= orderInfo.paymentMethod
+                        td 
+                            .center= orderInfo.status
+                        td
+                            .center 
+                                button.btn.btn-primary(type='button' data-toggle='modal' data-target='#modifyOrderConfirm' + orderInfo.orderId) 
+                                    i.fas.fa-edit
+                                .modal(id= ('modifyOrderConfirm' + orderInfo.orderId) role='dialog' class='fade')
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header
+                                                h4.modal-title Xác nhận trạng thái đơn hàng
+                                                button.close(type='button' data-dismiss='modal') ×
+                                            .modal-body
+                                                br
+                                                | Trạng thái đơn hàng hiện tại: 
+                                                span= orderInfo.status
+                                                br
+                                                br
+                                                form(action="/admin/orders/modify-status/" + orderInfo.orderId, method="post")
+                                                    label(for='status') Cập nhật trạng thái mới 
+                                                    select#status.custom-select(name='status', required='')
+                                                        option(selected='' disabled='' value='') Chọn...
+                                                        option Pending
+                                                        option Awaiting Payment
+                                                        option Awaiting Fulfillment
+                                                        option Awaiting Shipment
+                                                        option Awaiting Pickup
+                                                        option Shipping
+                                                        option Shipped
+                                                        option Completed 
+                                                    .modal-footer
+                                                        button.btn.btn-secondary(type='button' data-dismiss='modal') Hủy
+                                                        button.btn.btn-primary(type='submit') Xác nhận
+                            br
+                            .center 
+                                button.btn.btn-sm.btn-danger(type='button' data-toggle='modal' data-target='#deleteOrderConfirm'+ orderInfo.orderId) 
+                                    | Xóa
+                                .modal(id=('deleteOrderConfirm'+ orderInfo.orderId) role='dialog' class='fade')
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header
+                                                h5.modal-title Xóa đơn hàng
+                                                button.close(type='button' data-dismiss='modal') ×
+                                            .modal-body
+                                                br
+                                                | Đồng ý xóa đơn hàng: 
+                                                span= orderInfo.orderId
+                                                span ?
+                                                br
+                                                br
+                                            .modal-footer
+                                                button.btn.btn-secondary(type='button' data-dismiss='modal') Hủy
+                                                a.btn.btn-primary(type='submit' href='/admin/orders/delete-order/' + orderInfo.orderId ) Đồng ý

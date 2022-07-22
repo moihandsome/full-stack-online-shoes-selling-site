@@ -1,0 +1,165 @@
+html 
+    head 
+        link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css")
+        link(rel='stylesheet', href='/styles/admin/news.css')
+        script(src='https://code.jquery.com/jquery-3.5.1.slim.min.js' integrity='sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj' crossorigin='anonymous')
+        script(src='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js' integrity='sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns' crossorigin='anonymous')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css')
+        title X-Mobie / Admin
+    body
+        .countdown
+            .countt
+                h6 Phiên làm việc sẽ kết thúc trong:  
+                h6#demo.count
+                script.
+                    var countDownDate = new Date(#{z}+30*60*1000).getTime();
+                    var x = setInterval(function() {
+                        var now = new Date().getTime();
+                        var distance = countDownDate - now;
+                        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                        document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+                        + minutes + "m " + seconds + "s ";
+                        if (distance < 0) {
+                            clearInterval(x);
+                            document.getElementById("demo").innerHTML = "Vui lòng đăng nhập lại để tiếp tục!";
+                        }
+                    }, 1000);
+            .infouser
+                i.fas.fa-user
+                span= fullname
+                br
+                i.fas.fa-tag 
+                span= role
+                br
+                a.logout.btn.btn-sm.btn-danger(href='/admin/logout') Đăng xuất
+        .title
+            .center 
+                a(href='/admin') 
+                    h4 X-MOBILE
+            .center
+                h1 QUẢN LÝ TIN TỨC
+        .form.center
+            form(action='/admin/search', method='get')
+                    input(type='text', name='q', placeholder='Nhập tin tức...')
+                    button(type='submit')
+                        i.fas.fa-search
+            a.btn.btn-sm.btn-primary.ml-2(href='/admin/phones') Quản lý điện thoại
+            a.btn.btn-sm.btn-primary.ml-2(href='/admin/accessories') Quản lý phụ kiện
+            a.btn.btn-sm.btn-primary.ml-2(href='/admin/news') Quản lý tin tức
+            a.btn.btn-sm.btn-primary.ml-2(href="/admin/orders") Quản lý đơn hàng
+            a.btn.btn-sm.btn-primary.ml-2(href="/admin/users") Quản lý nhân sự
+
+        .container.mt-5
+            row
+                .box.shadow-sm.rounded.bg-light.mb-3
+                    .box-title.border-bottom.p-3
+                        h4.m-0.mr-3.font-weight-bold 
+                            i.fas.fa-newspaper.pr-2
+                            | TIN TỨC MỚI NHẤT
+                            button.ml-2.btn-circle.btn-primary.btn(type='button' data-toggle='modal' data-target='#addNew')  
+                                i.fas.fa-plus-circle
+                            #addNew.modal.fade
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header
+                                                h4.modal-title Thêm tin tức mới
+                                                button.close(type='button' data-dismiss='modal') × 
+                                            .modal-body
+                                                form.form-signin(action="/admin/news/add-new-news", method="post", enctype='multipart/form-data') 
+                                                    .form-label-group
+                                                        input.form-control.left(name='newTitle' type='text' placeholder='Tiêu đề...' required='' autofocus='')
+                                                    br
+                                                    .form-label-group
+                                                        textarea.form-control(name='newDetail' type='text' placeholder='Nội dung...' required='' autofocus='')
+                                                    br
+                                                    .containerr
+                                                        .panel
+                                                            .button_outer
+                                                                .btn_upload
+                                                                    input#upload_file(type='file' name='image' required='' autofocus='')
+                                                                    | Chọn ảnh
+                                                                .processing_bar
+                                                                .success_box
+                                                        .error_msg
+                                                        #uploaded_view.uploaded_file_view
+                                                            span.file_remove X
+                                                    script.
+                                                        var btnUpload = $("#upload_file"),
+                                                        btnOuter = $(".button_outer");
+                                                        btnUpload.on("change", function(e){
+                                                            var ext = btnUpload.val().split('.').pop().toLowerCase();
+                                                            if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+                                                                $(".error_msg").text("Sai định dạng! Vui lòng chọn lại...");
+                                                            } else {
+                                                                $(".error_msg").text("");
+                                                                btnOuter.addClass("file_uploading");
+                                                                setTimeout(function(){
+                                                                    btnOuter.addClass("file_uploaded");
+                                                                },3000);
+                                                                var uploadedFile = URL.createObjectURL(e.target.files[0]);
+                                                                setTimeout(function(){
+                                                                    $("#uploaded_view").append('<img src="'+uploadedFile+'" />').addClass("show");
+                                                                },3500);
+                                                            }
+                                                        });
+                                                        $(".file_remove").on("click", function(e){
+                                                            $("#uploaded_view").removeClass("show");
+                                                            $("#uploaded_view").find("img").remove();
+                                                            btnOuter.removeClass("file_uploading");
+                                                            btnOuter.removeClass("file_uploaded");
+                                                        });
+                                                    br
+                                                    .modal-footer
+                                                        button.btn.btn-primary(type='submit') Xác nhận
+                    each newss in news
+                        .box-body.p-0
+                            .p-3.d-flex.align-items-center.bg-white.border-bottom.osahan-post-header
+                                .dropdown-list-image.mr-3
+                                    img(src='../images/news/' + newss.url alt='')
+                                .font-weight-bold.mr-3
+                                    .text-truncate= newss.title
+                                    .small= newss.detail          
+                                span.action
+                                    .btn-group
+                                        button.btn.btn-light.btn-sm.rounded(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                                            i.fas.fa-ellipsis-v
+                                        .dropdown-menu.dropdown-menu-right
+                                            button.dropdown-item(type='button' data-toggle='modal' data-target='#modifyNews'+ newss.newsId)
+                                                i.mdi.mdi-modify  
+                                                |  Sửa
+                                            button.dropdown-item(type='button' data-toggle='modal' data-target='#deleteNews'+ newss.newsId)
+                                                i.mdi.mdi-delete   
+                                                |  Xóa
+                                        .modal(id= ('modifyNews'+ newss.newsId) role='dialog' class='fade')
+                                            .modal-dialog
+                                                .modal-content
+                                                    .modal-header
+                                                        h4.modal-title Sửa tin tức
+                                                        button.close(type='button' data-dismiss='modal') ×
+                                                    .modal-body.center
+                                                        form.form-signin(action="/admin/news/modify-news/" + newss.newsId, method="post") 
+                                                            select.custom-select.d-block.w-100(name="option" required='')
+                                                                option(selected='' disabled='' value='') Chọn hạng mục...
+                                                                option(value='title') Tiêu đề
+                                                                option(value='detail') Nội dung
+                                                            br
+                                                            .form-label-group
+                                                                textarea#message-text.form-control(name='newInfo' type='text' placeholder='Nhập mới...' required='' autofocus='')
+                                                            .modal-footer
+                                                                button.btn.btn-primary(type='submit') Xác nhận
+                                            
+                                        .modal(id= ('deleteNews'+ newss.newsId) role='dialog' class='fade')
+                                            .modal-dialog
+                                                .modal-content
+                                                    .modal-header
+                                                        h4.modal-title Xóa tin tức
+                                                        button.close(type='button' data-dismiss='modal') ×
+                                                    .modal-body.center
+                                                        h6 Xác nhận xóa tin tức?
+                                                    .modal-footer
+                                                        a.btn.btn-primary(href='/admin/news/delete-news/' + newss.newsId, type='submit') Xác nhận
+                                    br
+                                    .text.text-muted.pt-1= newss.time

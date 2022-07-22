@@ -1,0 +1,50 @@
+extends ../layout/header
+block header
+    .sort
+        ul.sort1
+            li Chọn mức giá: 
+            li.hover 
+                a(href='/products/price-less-than-5000000') Dưới 5 triệu
+            li
+                a(href='/products/price-5000000-to-10000000') 5 - 10 triệu
+            li
+                a(href='/products/price-10000000-to-20000000') 10 - 20 triệu
+            li
+                a(href='/products/price-more-than-20000000') Trên 20 triệu
+        ul.sort2
+            li Sắp xếp theo: 
+            li.hover
+                a(href='/products/sort-by-price-up') Giá tăng dần ↑
+            li 
+                a(href='/products/sort-by-price-down') Giá giảm dần ↓
+    .row
+        each product in products
+            .col-3 
+                .card
+                    a(href='/products/' + product.productId)
+                        .hover
+                            figure
+                                img(src= '../images/' + product.url)
+                    .card-body
+                        h4= product.name
+                        h6= product.price.toLocaleString("fi-FI") + '₫'
+    if ifPage != 0
+        .pagination
+            ul
+                li
+                a(href='/products/?page='+ prevPage) «
+                li
+                a(href='/products/?page='+ prevPage) #{prevPage}
+                li
+                a.active(href='/products/?page='+ page)
+                    | #{page}
+                li
+                a(href='/products/?page='+ nextPage) #{nextPage}
+                li 
+                a(href='/products/?page='+ nextPage) »
+
+
+
+
+
+            

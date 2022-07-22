@@ -1,0 +1,44 @@
+extends ./layout/header
+block header
+    link(rel='stylesheet', href='/styles/home.css')
+
+    .slider 
+        figure 
+            img(src="../images/slide1.png", alt="")
+            img(src="../images/slide2.jpg", alt="")
+            img(src="../images/slide3.jpg", alt="")
+            img(src="../images/slide4.jpg", alt="")
+            img(src="../images/slide1.png", alt="")
+
+    .recommendItems
+        .row1
+            p NEW IPHONE 12 SERIES
+        .row
+            each product in newProducts1
+                .col-3 
+                    .card
+                        a(href='/products/' + product.productId)
+                            .hover
+                                figure
+                                    img(src= '../images/' + product.url)
+                        .card-body
+                            h4= product.name
+                            h6= product.price.toLocaleString("fi-FI") + '₫'
+        .recommendItems
+        .row1
+            p NEW SAMSUNG SMARTPHONE 
+        .row
+            each product in newProducts2
+                .col-3 
+                    .card
+                        a(href='/products/' + product.productId)
+                            .hover
+                                figure
+                                    img(src= '../images/' + product.url)
+                        .card-body
+                            h4= product.name
+                            h6= product.price.toLocaleString("fi-FI") + '₫'
+
+
+
+        

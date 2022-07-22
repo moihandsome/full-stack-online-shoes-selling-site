@@ -1,0 +1,48 @@
+html 
+    head 
+        link(rel='stylesheet', href='/styles/product/home.css')
+        link(rel='stylesheet', href='/styles/product/detail.css')
+        link(rel='stylesheet', href='/styles/product/notfound.css')
+        link(rel='stylesheet', href='/styles/layout/header.css')
+        link(rel='stylesheet', href='/styles/cart/home.css')
+        link(rel='stylesheet', href='/styles/cart/emptycart.css')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css')
+        title X-Mobie
+    body
+        header
+            a(href='/')
+                img.logo(src='../images/logo.png', width='120px', height='60px')
+            ul.nav__links
+                li.hover
+                    a(href='/products') Tất cả
+                li
+                    a(href='/products/apple') Apple
+                li
+                    a(href='/products/samsung') Samsung
+                li
+                    a(href='/products/oppo') Oppo
+                li
+                    a(href='/products/realme') Realme
+                li
+                    a(href='/products/vsmart') Vsmart
+                li 
+                    .dropdown
+                        a.button.dropbtn(href='/products/accessories') Phụ kiện
+                        .dropdown-content
+                            a(href='/products/case') Ốp lưng
+                            a(href='/products/charger-cable') Cáp sạc | Củ sạc
+                            a(href='/products/battery') Pin dự phòng
+                li
+                    a(href='/news') Tin tức
+            form(action='/products/search', method='get')
+                input(type='text', name='q', placeholder='Nhập tên sản phẩm...')
+                script.
+                    var q = q.replace(/\b(?:select from|select|from|where|union|drop)\b/ig, '').toLowerCase().split(/[*.:;?#@$%^!~,`"“”'&|()<>{}\=\+\-[\]\r\n/\\]+/).join('')
+                button(type='submit')
+                    i.fas.fa-search
+            a(href="/cart")    
+                .cart-nav 
+                    .icon 
+                        i.fas.fa-shopping-cart
+                    .item-numb #{countCart}
+        block header

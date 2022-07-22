@@ -1,0 +1,248 @@
+html 
+    head 
+        link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css")
+        link(rel='stylesheet', href='/styles/admin/user.css')
+        script(src='https://code.jquery.com/jquery-3.5.1.slim.min.js' integrity='sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj' crossorigin='anonymous')
+        script(src='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js' integrity='sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns' crossorigin='anonymous')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css')
+        title X-Mobie / Admin
+    body
+        .countdown
+            .countt
+                h6 Phiên làm việc sẽ kết thúc trong:  
+                h6#demo.count
+                script.
+                    var countDownDate = new Date(#{z}+30*60*1000).getTime();
+                    var x = setInterval(function() {
+                        var now = new Date().getTime();
+                        var distance = countDownDate - now;
+                        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                        document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+                        + minutes + "m " + seconds + "s ";
+                        if (distance < 0) {
+                            clearInterval(x);
+                            document.getElementById("demo").innerHTML = "Vui lòng đăng nhập lại để tiếp tục!";
+                        }
+                    }, 1000);
+            .infouser
+                i.fas.fa-user
+                span= fullname
+                br
+                i.fas.fa-tag 
+                span= role
+                br
+                a.logout.btn.btn-sm.btn-danger(href='/admin/logout') Đăng xuất
+            
+        .title
+            .center
+                a(href='/admin') 
+                    h1 X-MOBILE
+        .center
+            a.btn.btn-sm.btn-primary.ml-2(href='/admin/phones') Quản lý điện thoại
+            a.btn.btn-sm.btn-primary.ml-2(href='/admin/accessories') Quản lý phụ kiện
+            a.btn.btn-sm.btn-primary.ml-2(href='/admin/news') Quản lý tin tức
+            a.btn.btn-sm.btn-primary.ml-2(href="/admin/orders") Quản lý đơn hàng
+            a.btn.btn-sm.btn-primary.ml-2(href="/admin/users") Quản lý nhân sự
+
+        table.table.table-hover.table-borderless
+            tr
+                th 
+                    .center 
+                        span UserId
+                        button.ml-2.btn.btn-sm.btn-circle.btn-primary.i.fas.fa-plus-circle(type='button' data-toggle='modal' data-target='#addNew')
+                        #addNew.modal.fade
+                            .modal-dialog
+                                .modal-content
+                                    .modal-header
+                                        h4.modal-title Thêm người quản lý mới
+                                        button.close(type='button' data-dismiss='modal') × 
+                                    .modal-body
+                                        form.form-signin(action="/admin/users/add-new-user", method="post") 
+                                            .form-label-group
+                                                input.form-control.left(name='newFullname' type='text' placeholder='Họ tên' required='' autofocus='')
+                                            br
+                                            .form-label-group
+                                                input.form-control.left(name='newUsername' type='text' placeholder='Tên đăng nhập' required='' autofocus='')
+                                            br
+                                            .form-label-group
+                                                input.form-control.left(name='newPassword' type='password' placeholder='Mật khẩu' required='' autofocus='')
+                                            br
+                                            .form-label-group
+                                                input.form-control.left(name='newPasswordConfirm' type='password' placeholder='Nhập lại mật khẩu' required='' autofocus='')
+                                            br
+                                            select.custom-select.d-block.w-100(name="newRole" required='')
+                                                option(selected='' disabled='' value='') Vai trò
+                                                option(value='admin') Tổng quản lý
+                                                option(value='product') Quản lý sản phẩm
+                                                option(value='news') Quản lý tin tức
+                                                option(value='order') Quản lý đơn hàng
+                                            br
+                                            .modal-footer
+                                                button.btn.btn-primary(type='submit') Xác nhận
+                th 
+                    .center Fullname
+                th 
+                    .center Role
+                th 
+                    .center Action
+            tbody
+                each user in users
+                    tr
+                        td.center= user.userId
+                        td.center= user.fullname
+                        td.center
+                            -if (user.role == 'admin')
+                                span Tổng quản lý
+                                button.btn.btn-sm.btn-secondary.i.fas.fa-user-edit.ml-2(type='button' data-toggle='modal' data-target='#modifyUser'+ user.userId)
+                                .modal(id= ('modifyUser'+ user.userId) role='dialog' class='fade')
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header
+                                                h4.modal-title Chỉnh sửa vai trò
+                                                button.close(type='button' data-dismiss='modal') ×
+                                            .modal-body.center
+                                                form(action="/admin/users/modify-user/" + user.userId, method="post")
+                                                    h6 Vai trò hiện tại:
+                                                    -if (user.role == 'admin')
+                                                        span Tổng quản lý
+                                                    -if (user.role == 'product')
+                                                        span Quản lý sản phẩm
+                                                    -if (user.role == 'order')
+                                                        span Quản lý đơn hàng
+                                                    -if (user.role == 'news')
+                                                        span Quản lý tin tức
+                                                    br
+                                                    br
+                                                    h6 Chọn mới
+                                                    select.se.custom-select.d-block.w-100(name="newRole" required='')
+                                                        option(selected='' disabled='' value='') Vai trò
+                                                        option(value='admin') Tổng quản lý
+                                                        option(value='product') Quản lý sản phẩm
+                                                        option(value='news') Quản lý tin tức
+                                                        option(value='order') Quản lý đơn hàng
+                                                    br
+                                                    .modal-footer
+                                                        button.btn.btn-primary(type='submit') Xác nhận
+                            -if (user.role == 'product')
+                                span Quản lý sản phẩm
+                                button.btn.btn-sm.btn-secondary.i.fas.fa-user-edit.ml-2(type='button' data-toggle='modal' data-target='#modifyUser'+ user.userId)
+                                .modal(id= ('modifyUser'+ user.userId) role='dialog' class='fade')
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header
+                                                h4.modal-title Chỉnh sửa vai trò
+                                                button.close(type='button' data-dismiss='modal') ×
+                                            .modal-body.center
+                                                form(action="/admin/users/modify-user/" + user.userId, method="post")
+                                                    h6 Vai trò hiện tại:
+                                                    -if (user.role == 'admin')
+                                                        span Tổng quản lý
+                                                    -if (user.role == 'product')
+                                                        span Quản lý sản phẩm
+                                                    -if (user.role == 'order')
+                                                        span Quản lý đơn hàng
+                                                    -if (user.role == 'news')
+                                                        span Quản lý tin tức
+                                                    br
+                                                    br
+                                                    h6 Chọn mới
+                                                    select.se.custom-select.d-block.w-100(name="newRole" required='')
+                                                        option(selected='' disabled='' value='') Vai trò
+                                                        option(value='admin') Tổng quản lý
+                                                        option(value='product') Quản lý sản phẩm
+                                                        option(value='news') Quản lý tin tức
+                                                        option(value='order') Quản lý đơn hàng
+                                                    br
+                                                    .modal-footer
+                                                        button.btn.btn-primary(type='submit') Xác nhận
+                            -if (user.role == 'order')
+                                span Quản lý đơn hàng
+                                button.btn.btn-sm.btn-secondary.i.fas.fa-user-edit.ml-2(type='button' data-toggle='modal' data-target='#modifyUser'+ user.userId)
+                                .modal(id= ('modifyUser'+ user.userId) role='dialog' class='fade')
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header
+                                                h4.modal-title Chỉnh sửa vai trò
+                                                button.close(type='button' data-dismiss='modal') ×
+                                            .modal-body.center
+                                                form(action="/admin/users/modify-user/" + user.userId, method="post")
+                                                    h6 Vai trò hiện tại:
+                                                    -if (user.role == 'admin')
+                                                        span Tổng quản lý
+                                                    -if (user.role == 'product')
+                                                        span Quản lý sản phẩm
+                                                    -if (user.role == 'order')
+                                                        span Quản lý đơn hàng
+                                                    -if (user.role == 'news')
+                                                        span Quản lý tin tức
+                                                    br
+                                                    br
+                                                    h6 Chọn mới
+                                                    select.se.custom-select.d-block.w-100(name="newRole" required='')
+                                                        option(selected='' disabled='' value='') Vai trò
+                                                        option(value='admin') Tổng quản lý
+                                                        option(value='product') Quản lý sản phẩm
+                                                        option(value='news') Quản lý tin tức
+                                                        option(value='order') Quản lý đơn hàng
+                                                    br
+                                                    .modal-footer
+                                                        button.btn.btn-primary(type='submit') Xác nhận
+                            -if (user.role == 'news')
+                                span Quản lý tin tức
+                                button.btn.btn-sm.btn-secondary.i.fas.fa-user-edit.ml-2(type='button' data-toggle='modal' data-target='#modifyUser'+ user.userId)
+                                .modal(id= ('modifyUser'+ user.userId) role='dialog' class='fade')
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header
+                                                h4.modal-title Chỉnh sửa vai trò
+                                                button.close(type='button' data-dismiss='modal') ×
+                                            .modal-body.center
+                                                form(action="/admin/users/modify-user/" + user.userId, method="post")
+                                                    h6 Vai trò hiện tại:
+                                                    -if (user.role == 'admin')
+                                                        span Tổng quản lý
+                                                    -if (user.role == 'product')
+                                                        span Quản lý sản phẩm
+                                                    -if (user.role == 'order')
+                                                        span Quản lý đơn hàng
+                                                    -if (user.role == 'news')
+                                                        span Quản lý tin tức
+                                                    br
+                                                    br
+                                                    h6 Chọn mới
+                                                    select.se.custom-select.d-block.w-100(name="newRole" required='')
+                                                        option(selected='' disabled='' value='') Vai trò
+                                                        option(value='admin') Tổng quản lý
+                                                        option(value='product') Quản lý sản phẩm
+                                                        option(value='news') Quản lý tin tức
+                                                        option(value='order') Quản lý đơn hàng
+                                                    br
+                                                    .modal-footer
+                                                        button.btn.btn-primary(type='submit') Xác nhận
+                        td.center
+                            button.btn.btn-sm.btn-danger.i.fas.fa-trash(type='button' data-toggle='modal' data-target='#deleteUser'+ user.userId)
+                            .modal(id= ('deleteUser'+ user.userId) role='dialog' class='fade')
+                                .modal-dialog
+                                    .modal-content
+                                        .modal-header
+                                            h4.modal-title Xóa người quản lý
+                                            button.close(type='button' data-dismiss='modal') ×
+                                        .modal-body.center
+                                            h6 Xác nhận xóa người quản lý: 
+                                            span= user.fullname
+                                            br
+                                            br
+                                            h6 Vai trò:
+                                            -if (user.role == 'admin')
+                                                span Tổng quản lý
+                                            -if (user.role == 'product')
+                                                span Quản lý sản phẩm
+                                            -if (user.role == 'order')
+                                                span Quản lý đơn hàng
+                                            -if (user.role == 'news')
+                                                span Quản lý tin tức
+                                        .modal-footer
+                                            a.btn.btn-primary(href='/admin/users/delete-user/' + user.userId, type='submit') Xác nhận

@@ -1,0 +1,72 @@
+html 
+    head 
+        link(rel='stylesheet', href='/styles/layout/header.css')
+        link(rel='stylesheet', href='/styles/product/detailaccessory.css')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css')
+        title X-Mobie
+    body
+        header
+            a(href='/')
+                img.logo(src='../images/logo.png', width='120px', height='60px')
+            ul.nav__links
+                li.hover
+                    a(href='/products') Tất cả
+                li
+                    a(href='/products/apple') Apple
+                li
+                    a(href='/products/samsung') Samsung
+                li
+                    a(href='/products/oppo') Oppo
+                li
+                    a(href='/products/realme') Realme
+                li
+                    a(href='/products/vsmart') Vsmart
+                li 
+                    .dropdown
+                        a.button.dropbtn(href='/products/accessories') Phụ kiện
+                        .dropdown-content
+                            a(href='/products/case') Ốp lưng
+                            a(href='/products/charger-cable') Cáp sạc | Củ sạc
+                            a(href='/products/battery') Pin dự phòng
+                li
+                    a(href='/news') Tin tức
+            form(action='/products/search', method='get')
+                input(type='text', name='q', placeholder='Nhập tên sản phẩm...')
+                button(type='submit')
+                    i.fas.fa-search
+            a(href="/cart")    
+                .cart-nav 
+                    .icon 
+                        i.fas.fa-shopping-cart
+                    .item-numb #{countCart}
+
+        each product in products
+                .row
+                    .col-2
+                        .title
+                            img(src= '../images/' + product.url)
+                    .col-2
+                        .text
+                            h1= product.name
+                            br
+                            h4= product.price.toLocaleString("fi-FI") + '₫'
+                            br
+                            button 
+                                a.buynow(href='/cart/add/' + product.productId) THÊM VÀO GIỎ HÀNG
+                            br
+                            br
+        .recommendItems
+            .row1
+                p Các sản phẩm liên quan
+            .row
+                each product in recommendProducts
+                    .col-3 
+                        .card
+                            a(href='/products/' + product.productId)
+                                .hover
+                                    figure
+                                        img(src= '../images/' + product.url)
+                            .card-body
+                                h4= product.name
+                                h6= product.price.toLocaleString("fi-FI") + '₫'
+

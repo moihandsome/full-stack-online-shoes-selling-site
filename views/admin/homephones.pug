@@ -1,0 +1,301 @@
+html 
+    head 
+        link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css")
+        link(rel='stylesheet', href='/styles/admin/home.css')
+        script(src='https://code.jquery.com/jquery-3.5.1.slim.min.js' integrity='sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj' crossorigin='anonymous')
+        script(src='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js' integrity='sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns' crossorigin='anonymous')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css')
+        title X-Mobie / Admin
+    body
+        .countdown
+            .countt
+                h6 Phiên làm việc sẽ kết thúc trong:  
+                h6#demo.count
+                script.
+                    var countDownDate = new Date(#{z}+30*60*1000).getTime();
+                    var x = setInterval(function() {
+                        var now = new Date().getTime();
+                        var distance = countDownDate - now;
+                        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                        document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+                        + minutes + "m " + seconds + "s ";
+                        if (distance < 0) {
+                            clearInterval(x);
+                            document.getElementById("demo").innerHTML = "Vui lòng đăng nhập lại để tiếp tục!";
+                        }
+                    }, 1000);
+            .infouser
+                i.fas.fa-user
+                span= fullname
+                br
+                i.fas.fa-tag 
+                span= role
+                br
+                a.logout.btn.btn-sm.btn-danger(href='/admin/logout') Đăng xuất
+        .title
+            .center 
+                a(href='/admin') 
+                    h4 X-MOBILE
+            .center
+                h1 QUẢN LÝ ĐIỆN THOẠI
+        .form.center
+            form(action='/admin/phones/search', method='get')
+                    input(type='text', name='q', placeholder='Nhập tên sản phẩm...')
+                    button(type='submit')
+                        i.fas.fa-search
+            a.btn.btn-sm.btn-primary.ml-2(href='/admin/phones') Quản lý điện thoại
+            a.btn.btn-sm.btn-primary.ml-2(href='/admin/accessories') Quản lý phụ kiện
+            a.btn.btn-sm.btn-primary.ml-2(href='/admin/news') Quản lý tin tức
+            a.btn.btn-sm.btn-primary.ml-2(href="/admin/orders") Quản lý đơn hàng
+            a.btn.btn-sm.btn-primary.ml-2(href="/admin/users") Quản lý nhân sự
+        table.cart
+            tbody
+                tr.title
+                    th
+                        .center
+                            span  SẢN PHẨM
+                                button.ml-2.btn-circle.btn-primary.btn(type='button' data-toggle='modal' data-target='#addNew')  
+                                    i.fas.fa-plus-circle  
+                                #addNew.modal.fade
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header
+                                                h4.modal-title Thêm sản phẩm
+                                                button.close(type='button' data-dismiss='modal') × 
+                                            .modal-body
+                                                form.form-signin(action="/admin/phones/add-new", method="post", enctype='multipart/form-data') 
+                                                    .form-label-group
+                                                        input#inputnewName.form-control(name='newName' type='text' placeholder='Tên sản phẩm' required='' autofocus='')
+                                                    br
+                                                    .form-label-group
+                                                        input#inputnewBrand.form-control(name='newBrand' type='text' placeholder='Hãng sản phẩm' required='' autofocus='')
+                                                    br
+                                                    .form-label-group
+                                                        input#inputnewPrice.form-control(name='newPrice' type='text' placeholder='Giá sản phẩm' required='' autofocus='')
+                                                    br
+                                                    .form-label-group
+                                                        input#inputnewQuantity.form-control(name='newQuantity' type='text' placeholder='Số lượng sản phẩm' required='' autofocus='')
+                                                    br
+                                                    .form-label-group
+                                                        input#inputnewScreenSize.form-control(name='newScreenSize' type='text' placeholder='Kích thước màn hình' required='' autofocus='')
+                                                    br
+                                                    .form-label-group
+                                                        input#inputnewScreenTech.form-control(name='newScreenTech' type='text' placeholder='Công nghệ màn hình' required='' autofocus='')
+                                                    br
+                                                    .form-label-group
+                                                        input#inputnewCameraRear.form-control(name='newCameraRear' type='text' placeholder='Camera sau' required='' autofocus='')
+                                                    br
+                                                    .form-label-group
+                                                        input#inputnewCameraFront.form-control(name='newCameraFront' type='text' placeholder='Camera trước' required='' autofocus='')
+                                                    br
+                                                    .form-label-group
+                                                        input#inputnewChipset.form-control(name='newChipset' type='text' placeholder='Chipset' required='' autofocus='')
+                                                    br
+                                                    .form-label-group
+                                                        input#inputnewRAM.form-control(name='newRAM' type='text' placeholder='RAM' required='' autofocus='')
+                                                    br
+                                                    .form-label-group
+                                                        input#inputnewMemory.form-control(name='newMemory' type='text' placeholder='Bộ nhớ trong' required='' autofocus='')
+                                                    br
+                                                    .form-label-group
+                                                        input#inputnewPin.form-control(name='newPin' type='text' placeholder='Pin' required='' autofocus='')
+                                                    br
+                                                    .form-label-group
+                                                        input#inputnewOs.form-control(name='newOs' type='text' placeholder='Hệ điều hành' required='' autofocus='')
+                                                    br
+                                                    .containerr
+                                                        .panel
+                                                            .button_outer
+                                                                .btn_upload
+                                                                    input#upload_file(type='file' name='image' required='' autofocus='')
+                                                                    | Chọn ảnh
+                                                                .processing_bar
+                                                                .success_box
+                                                        .error_msg
+                                                        #uploaded_view.uploaded_file_view
+                                                            span.file_remove X
+                                                    script.
+                                                        var btnUpload = $("#upload_file"),
+                                                        btnOuter = $(".button_outer");
+                                                        btnUpload.on("change", function(e){
+                                                            var ext = btnUpload.val().split('.').pop().toLowerCase();
+                                                            if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+                                                                $(".error_msg").text("Sai định dạng! Vui lòng chọn lại...");
+                                                            } else {
+                                                                $(".error_msg").text("");
+                                                                btnOuter.addClass("file_uploading");
+                                                                setTimeout(function(){
+                                                                    btnOuter.addClass("file_uploaded");
+                                                                },3000);
+                                                                var uploadedFile = URL.createObjectURL(e.target.files[0]);
+                                                                setTimeout(function(){
+                                                                    $("#uploaded_view").append('<img src="'+uploadedFile+'" />').addClass("show");
+                                                                },3500);
+                                                            }
+                                                        });
+                                                        $(".file_remove").on("click", function(e){
+                                                            $("#uploaded_view").removeClass("show");
+                                                            $("#uploaded_view").find("img").remove();
+                                                            btnOuter.removeClass("file_uploading");
+                                                            btnOuter.removeClass("file_uploaded");
+                                                        });
+                                                    .modal-footer
+                                                        button.btn.btn-primary(type='submit') Xác nhận 
+                    th 
+                        .center THÔNG TIN
+                    th
+                        .center ĐƠN GIÁ
+                    th.qty
+                        .center SỐ LƯỢNG
+                    th.action
+                        .center HÀNH ĐỘNG
+                each product in products
+                    tr
+                        td
+                            .center
+                                img(src='../images/'+product.url)
+                                p= product.name
+                        td   
+                            table.tt
+                                tr
+                                    th Kích thước màn hình
+                                    td= product.screen_size
+                                tr
+                                    th Công nghệ màn hình
+                                    td= product.screen_tech
+                                tr
+                                    th Camera sau
+                                    td= product.camera_rear
+                                tr
+                                    th Camera trước
+                                    td= product.camera_front
+                                tr
+                                    th Chipset
+                                    td= product.chipset
+                                tr
+                                    th RAM
+                                    td= product.ram
+                                tr
+                                    th Bộ nhớ trong
+                                    td= product.memory
+                                tr
+                                    th Pin
+                                    td= product.pin
+                                tr
+                                    th Hệ điều hành
+                                    td= product.os
+                        td
+                            .center= product.price.toLocaleString("fi-FI") + '₫'
+                        td.qty 
+                            .center= product.quantity
+                        td.action
+                            .center
+                                button.btn-sm.btn.btn-primary(type='button' data-toggle='modal' data-target='#modifyName'+product.productId)
+                                    | Thay đổi tên sản phẩm
+                                .modal(id= ('modifyName' + product.productId) role='dialog' class='fade')
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header
+                                                h4.modal-title Thay đổi tên sản phẩm
+                                                button.close(type='button' data-dismiss='modal') ×
+                                            .modal-body
+                                                h6 Tên hiện tại:
+                                                h6= product.name
+                                                br
+                                                form.form-signin(action="/admin/phones/modify-name/" + product.productId, method="post") 
+                                                    .form-label-group
+                                                        input#inputnewName.form-control(name='newName' type='text' placeholder='Nhập tên mới...' required='' autofocus='')
+                                                    .modal-footer
+                                                        button.btn.btn-primary(type='submit') Xác nhận
+                                br
+                                br
+                                button.btn-sm.btn.btn-primary(type='button' data-toggle='modal' data-target='#modifyInfo'+product.productId)
+                                    | Thay đổi thông tin sản phẩm
+                                .modal(id= ('modifyInfo' + product.productId) role='dialog' class='fade')
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header
+                                                h4.modal-title Thay đổi thông tin sản phẩm
+                                                button.close(type='button' data-dismiss='modal') ×
+                                            .modal-body
+                                                form(action="/admin/phones/modify-info/" + product.productId, method="post")
+                                                    label(for='infoId') Chọn hạng mục 
+                                                    select#infoId.custom-select(name='infoId', required='')
+                                                        option(selected='' disabled='' value='') Chọn...
+                                                        option(value='screen_size') Kích thước màn hình
+                                                        option(value='screen_tech') Công nghệ màn hình
+                                                        option(value='camera_rear') Camera sau 
+                                                        option(value='camera_front') Camera trước
+                                                        option(value='chipset') Chipset
+                                                        option(value='ram') RAM
+                                                        option(value='memory') Bộ nhớ trong
+                                                        option(value='pin') Pin
+                                                        option(value='os') Hệ điều hành 
+                                                    br
+                                                    br
+                                                    .form-label-group
+                                                        label(for='newInfo') Nhập giá trị mới
+                                                        input#inputnewInfo.form-control(name='newInfo' type='text' placeholder='' required='' autofocus='')
+                                                    .modal-footer
+                                                        button.btn.btn-primary(type='submit') Xác nhận
+                                br
+                                br
+                                button.btn-sm.btn.btn-primary(type='button' data-toggle='modal' data-target='#modifyPrice'+product.productId)
+                                    | Thay đổi giá sản phẩm
+                                .modal(id= ('modifyPrice' + product.productId) role='dialog' class='fade')
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header
+                                                h4.modal-title Thay đổi giá sản phẩm
+                                                button.close(type='button' data-dismiss='modal') ×
+                                            .modal-body
+                                                h6 Giá hiện tại:
+                                                h6= product.price.toLocaleString("fi-FI") + '₫'
+                                                br
+                                                form.form-signin(action="/admin/phones/modify-price/" + product.productId, method="post") 
+                                                        .form-label-group
+                                                            input#inputnewPrice.form-control(name='newPrice' type='text' placeholder='Nhập giá mới...' required='' autofocus='')
+                                                        .modal-footer
+                                                            button.btn.btn-primary(type='submit') Xác nhận
+                                br
+                                br
+                                button.btn.btn-sm.btn-primary(type='button' data-toggle='modal' data-target='#modifyQuantity'+product.productId)
+                                    | Thay đổi số lượng sản phẩm
+                                .modal(id= ('modifyQuantity' + product.productId) role='dialog' class='fade')
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header
+                                                h4.modal-title Thay đổi số lượng sản phẩm
+                                                button.close(type='button' data-dismiss='modal') ×
+                                            .modal-body
+                                                h6 Số lượng hiện tại:
+                                                h6= product.quantity
+                                                br
+                                                form.form-signin(action="/admin/phones/modify-quantity/" + product.productId, method="post") 
+                                                        .form-label-group
+                                                            input#inputnewQuantity.form-control(name='newQuantity' type='text' placeholder='Nhập số lượng mới...' required='' autofocus='')
+                                                        .modal-footer
+                                                            button.btn.btn-primary(type='submit') Xác nhận
+                                br
+                                br
+                                button.btn-sm.btn.btn-danger(type='button' data-toggle='modal' data-target='#deleteProduct'+product.productId)
+                                    | Xóa                  
+                                .modal(id= ('deleteProduct' + product.productId) role='dialog' class='fade')
+                                    .modal-dialog
+                                        .modal-content
+                                            .modal-header
+                                                h4.modal-title Xóa sản phẩm
+                                                button.close(type='button' data-dismiss='modal') ×
+                                            .modal-body
+                                                h6 Xác nhận xóa sản phẩm:
+                                                h6= product.name
+                                            .modal-footer
+                                                a.btn.btn-primary(href='/admin/phones/delete/' + product.productId, type='submit') Xác nhận
+                    
+                    
+                    
+                    
+                    
