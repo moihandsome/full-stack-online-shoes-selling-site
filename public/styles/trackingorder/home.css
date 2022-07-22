@@ -1,0 +1,28 @@
+.form form button{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 20px;
+    cursor: pointer;
+    width: 100px;
+    height: 34px;
+}
+.form form button:hover{
+    background-color: rgb(240, 240, 240);
+}
+.form form input{
+    text-align: center;
+    margin-right: 5px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 20px;
+    width: 300px;
+    height: 34px;
+}
+.form{
+    margin-top: 50px;
+}
+.center{
+    text-align: center;
+}
+.alert.alert-danger{
+    color: red;
+}

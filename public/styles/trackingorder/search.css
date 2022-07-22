@@ -1,0 +1,30 @@
+table.cart {
+    width: 95%;
+    margin: 30px 30px 30px 30px;
+}
+
+a.cart{
+    font-size: 50px;
+    text-align: center;
+    font-weight: bold;
+    padding-top: 20px;
+}
+table.cart tr{
+    border-bottom: 1px solid #cacaca;
+}
+table.cart td {
+    padding: 15px;
+
+}
+table.cart th {
+    padding: 15px;
+}
+.center{
+    text-align: center;
+}
+th.cus{
+    width: 200px;
+}
+h1{
+    margin-top: 100px;
+}

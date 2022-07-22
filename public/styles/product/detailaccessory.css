@@ -1,0 +1,76 @@
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding-top: 50px;
+    margin-right: 0;
+    font-size: 20px;
+    font-weight: 10;
+}
+
+.row .col-2{
+    width: 600px;
+}
+.row .col-2 img{
+    padding-bottom: 150px;
+    width: 450px;
+}
+
+.title{
+    text-align: center;
+}
+
+.row .col-2 button{
+    padding: 9px 25px;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+.row .col-2 button:hover{
+    background-color: rgb(97, 97, 97);
+}
+.row .col-2 a{
+    color: rgb(0, 0, 0);
+}
+.row .col-2 a.buynow{
+    color: rgb(255, 255, 255);
+}
+
+.recommendItems .row1{
+    text-align: center;  
+    font-size: 50px;
+}
+.recommendItems .row .col-3 .card a img{
+    width: 50%;
+}
+.recommendItems .row .col-3 .card .card-body{
+    font-size: 22;
+}
+
+.row .col-3 .card a img{
+    width: 70%;
+    max-height: 270px;
+}
+.col-3{
+    flex-basis: 30%;
+    min-width: 250px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+.card{
+    border-style: none;
+    text-align: center;
+}
+.card .card-body{
+    font-size: 30px;
+    padding-top: 20px;
+    font-weight: 10;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+.card .card-body h6{
+    padding-top: 5px;
+}

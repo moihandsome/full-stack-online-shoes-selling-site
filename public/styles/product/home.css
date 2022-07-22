@@ -1,0 +1,105 @@
+.card-deck{
+    margin-right: 0;
+}
+.row .col-3 .card a img{
+    width: 70%;
+    max-height: 270px;
+}
+.col-3{
+    flex-basis: 30%;
+    min-width: 250px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+.card{
+    border-style: none;
+    text-align: center;
+}
+.card .card-body{
+    font-size: 30px;
+    padding-top: 20px;
+    font-weight: 10;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+.card .card-body h6{
+    padding-top: 5px;
+}
+.hover figure img {
+	-webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+.hover figure:hover img {
+	-webkit-transform: scale(1.05);
+	transform: scale(1.05);
+}
+.sort{
+    padding: 100 0 0 100;
+    font-style: normal;
+    font-size: 10px;
+    text-decoration: none;
+    list-style: none;
+    justify-content: space-between;
+    display: flex;
+}
+
+.sort .sort1 li{
+    display: inline-block;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px;
+}
+.sort .sort1 li a:hover{
+    color: rgb(124, 124, 124);
+}
+.sort .sort1 li a{
+    color: black;
+    font-style: oblique;
+    padding: 0 15 0 15;
+    font-size: 15px;
+}
+
+.sort .sort2 li{
+    display: inline-block;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px;
+}
+.sort .sort2 li a:hover{
+    color: rgb(124, 124, 124);
+}
+.sort .sort2 li a{
+    color: black;
+    font-style: oblique;
+    padding: 0 15 0 15;
+    font-size: 15px;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 60px 0;
+}
+.pagination ul{
+    display: flex;
+}
+  
+.pagination ul a {
+    font-size: 25px;
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+.pagination ul li {
+    list-style: none;
+}
+.pagination a.active {
+    background-color: dodgerblue;
+    color: white;
+}
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}

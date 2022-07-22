@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
+* {
+  font-family: "Montserrat", sans-serif;
+}
+table.cart {
+  width: 95%;
+  margin: 30px 30px 30px 30px;
+}
+
+a.cart {
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+  padding-top: 10px;
+}
+table.cart tr {
+  border-bottom: 1px solid #cacaca;
+}
+table.cart td {
+  padding: 15px;
+}
+table.cart th {
+  padding: 15px;
+}
+.center {
+  text-align: center;
+}
+th.cus {
+  width: 200px;
+}
+.countdown {
+  padding: 10px 0 0 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.countt {
+  display: flex;
+}
+.countt .count {
+  padding-left: 5px;
+}
+.infouser {
+  text-align: right;
+  margin-right: 10px;
+}
+.infouser i {
+  padding-right: 4px;
+}
+.logout {
+  margin-top: 4px;
+  font-size: 12px;
+}
+.sort {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.form form button {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 20px;
+  cursor: pointer;
+  width: 44px;
+  height: 34px;
+}
+form button:hover {
+  background-color: rgb(240, 240, 240);
+}
+form input {
+  text-align: center;
+  margin-right: 5px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 20px;
+  width: 300px;
+  height: 34px;
+}
+.title .center a {
+  text-decoration: none;
+}
+select, option{
+  text-align-last: center;
+}

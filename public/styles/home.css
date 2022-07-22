@@ -1,0 +1,112 @@
+.row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding-top: 50px;
+  margin-right: 0;
+  font-size: 20px;
+  font-weight: 10;
+}
+.recommendItems {
+  padding-top: 100px;
+}
+.recommendItems .row1 {
+  text-align: center;
+  font-size: 50px;
+}
+.recommendItems .row .col-3 .card a img {
+  width: 50%;
+}
+.recommendItems .row .col-3 .card .card-body {
+  font-size: 22;
+}
+
+.row .col-2 img {
+  text-align: center;
+  padding-bottom: 200px;
+  width: 450px;
+}
+table {
+  width: 550px;
+}
+th {
+  padding-top: 15;
+  text-align: left;
+  min-width: 100px;
+}
+.title {
+  text-align: center;
+}
+td {
+  padding-top: 15;
+  text-align: left;
+}
+.row .col-2 button {
+  padding: 9px 25px;
+  background-color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+.row .col-2 button:hover {
+  background-color: rgb(97, 97, 97);
+}
+.row .col-2 a {
+  color: rgb(0, 0, 0);
+}
+.row .col-2 a.buynow {
+  color: rgb(255, 255, 255);
+}
+
+.slider {
+  overflow: hidden;
+}
+.slider figure{
+    position: relative;
+    width: 500%;
+    margin: 0;
+    left: 0;
+    animation: 20s slider infinite;
+}
+.slider figure img{
+    float: left;
+    width: 20%;
+}
+.banner{
+  text-align: center;
+  width: 100%;
+}
+@keyframes slider {
+    0%{
+        left: 0;
+    }
+    20%{
+        left: 0;
+    }
+    25%{
+        left: -100%;
+    }
+    45%{
+        left: -100%;
+    }
+    50%{
+        left: -200%;
+    }
+    70%{
+        left: -200%;
+    }
+    75%{
+        left: -300%;
+    }
+    95%{
+        left: -300%;
+    }
+    100%{
+        left: -400%;
+    }
+}
+
+

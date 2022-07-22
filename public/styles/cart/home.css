@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+table.cart {
+    font-family: 'Montserrat', sans-serif;
+    width: 80%;
+    margin: 30px 150px 0 150px;
+}
+
+p.cart{
+    font-size: 50px;
+    text-align: center;
+    padding-top: 60px;
+}
+  
+table.cart td {
+    border-bottom: 1px solid #dddddd;
+    text-align: left;
+    padding: 15px;
+
+}
+table.cart th {
+    border-bottom: 1px solid #dddddd;
+    text-align: left;
+    padding: 15px;
+    }
+tr.item{
+    align-items: center;
+}
+tr td img{
+    width: 15%;
+}
+th.center{
+    display: flex;
+    justify-content: space-around;
+}
+td.item{
+    display: flex;
+    align-items: center;
+}
+.qty{
+    align-items: center;
+    display: flex;
+    justify-content: space-evenly;
+}
+.qty a{
+    color: rgb(0, 0, 0);
+}
+tr.total{
+    
+    font-size: 25px;
+}
+tr.total th{
+    padding: 30px;
+    border: none;
+}
+a.del{
+    color: rgb(255, 255, 255);
+}
+a.check{
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    font-size: 25px;
+}
+
+tr.total th.check{
+    width: 300px;
+}
+button.check{
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(44, 152, 224);
+    color: white;
+    padding: 10px 10px 10px 10px;
+}
+
+table.check {
+    font-family: 'Montserrat', sans-serif;
+    width: 80%;
+    margin: 20px 150px 100px 150px;
+}
+
+button.del{
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(226, 35, 35);
+    padding: 5px 5px 5px 5px;
+}
+

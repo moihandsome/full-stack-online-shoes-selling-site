@@ -1,0 +1,46 @@
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-top: 50px;
+    margin-right: 0;
+    font-size: 20px;
+    font-weight: 10;
+
+}
+.news{
+    margin-bottom: 50px;
+}
+.title a{
+    color: black;
+}
+.title a:hover{
+    color: rgb(255, 78, 78);
+}
+.row img{
+    width: 1200px;
+}
+.col img.title{
+    width: 300px;
+}
+.col .title{
+    width: 800px;
+}
+
+.time{
+    margin-top: 10px;
+    font-size: 15px;
+}
+.time span{
+    padding-left: 5px;
+}
+.title{
+    display: block;
+    height: 200px !important;
+    overflow: hidden;
+}
+p{
+    display: block;
+    height: 75px !important;
+    overflow: hidden;
+}
